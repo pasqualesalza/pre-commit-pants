@@ -54,6 +54,7 @@ def main(
         )
         return_codes.append(result.returncode)
 
+    # If any of the Pants runs failed, exit with a non-zero code.
     if all(code == 0 for code in return_codes):
         return_code = 0
     else:
