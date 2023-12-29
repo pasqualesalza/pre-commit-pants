@@ -25,11 +25,11 @@ def main(
         List[Path], typer.Argument(help="List of files to pass to Pants.")
     ],
     split: Annotated[
-        Optional[int],
+        int,
         typer.Option(
             "--split", "-s", help="Pass files to Pants in batches of this size."
         ),
-    ] = None,
+    ] = 1000,
     version: Annotated[
         Optional[bool],
         typer.Option(
@@ -42,15 +42,21 @@ def main(
     ] = None,
 ) -> None:
     # Run the Pants goal on the files in batches of `split` files.
-    if split is None:
-        subprocess.run(["pants", "--unmatched-cli-globs=ignore", goal, *files])
+    return_codes = []
+    for i in range(0, len(files), split):
+        result = subprocess.run(
+            [
+                "pants",
+                "--unmatched-cli-globs=ignore",
+                goal,
+                *files[i : i + split],
+            ]
+        )
+        return_codes.append(result.returncode)
+
+    if all(code == 0 for code in return_codes):
+        return_code = 0
     else:
-        for i in range(0, len(files), split):
-            subprocess.run(
-                [
-                    "pants",
-                    "--unmatched-cli-globs=ignore",
-                    goal,
-                    *files[i : i + split],
-                ]
-            )
+        return_code = 1
+
+    raise SystemExit(return_code)
