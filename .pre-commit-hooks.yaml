@@ -14,7 +14,7 @@
 - id: pants-update-build-files
   name: pants update-build-files
   language: system
-  entry: "pants pants-update-build-files ::"
+  entry: "pants update-build-files ::"
   pass_filenames: false
   require_serial: true
 
