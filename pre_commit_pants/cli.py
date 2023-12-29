@@ -43,7 +43,14 @@ def main(
 ) -> None:
     # Run the Pants goal on the files in batches of `split` files.
     if split is None:
-        subprocess.run(["pants", goal, *files])
+        subprocess.run(["pants", "--unmatched-cli-globs=ignore", goal, *files])
     else:
         for i in range(0, len(files), split):
-            subprocess.run(["pants", goal, *files[i : i + split]])
+            subprocess.run(
+                [
+                    "pants",
+                    "--unmatched-cli-globs=ignore",
+                    goal,
+                    *files[i : i + split],
+                ]
+            )
