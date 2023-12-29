@@ -1,6 +1,54 @@
 - id: pants
-  name: Pants
-  description: Run Pants
-  entry: pre-commit-pants
+  name: pants
   language: python
+  entry: pre-commit-pants
+  require_serial: true
+
+- id: pants-tailor
+  name: pants tailor
+  language: system
+  entry: "pants tailor ::"
+  pass_filenames: false
+  require_serial: true
+
+- id: pants-update-build-files
+  name: pants update-build-files
+  language: system
+  entry: "pants pants-update-build-files ::"
+  pass_filenames: false
+  require_serial: true
+
+- id: pants-fmt
+  name: pants fmt
+  language: python
+  entry: pre-commit-pants
+  args: ["fmt"]
+  require_serial: true
+
+- id: pants-lint
+  name: pants lint
+  language: python
+  entry: pre-commit-pants
+  args: ["lint"]
+  require_serial: true
+
+- id: pants-fix
+  name: pants fix
+  language: python
+  entry: pre-commit-pants
+  args: ["fix"]
+  require_serial: true
+
+- id: pants-check
+  name: pants check
+  language: python
+  entry: pre-commit-pants
+  args: ["check"]
+  require_serial: true
+
+- id: pants-test
+  name: pants test
+  language: python
+  entry: pre-commit-pants
+  args: ["test"]
   require_serial: true
