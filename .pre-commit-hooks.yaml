@@ -1,0 +1,6 @@
+- id: pants
+  name: Pants
+  description: Run Pants
+  entry: pre-commit-pants
+  language: python
+  require_serial: true
