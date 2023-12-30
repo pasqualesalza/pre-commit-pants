@@ -40,7 +40,7 @@ def main(
             is_eager=True,
         ),
     ] = None,
-) -> None:
+) -> int:
     # Run the Pants goal on the files in batches of `split` files.
     return_codes = []
     for i in range(0, len(files), split):
